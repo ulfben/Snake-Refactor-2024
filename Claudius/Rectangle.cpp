@@ -8,11 +8,11 @@ Rectangle::Rectangle(const Rectangle& rhs) : x(rhs.x), y(rhs.y), w(rhs.w), h(rhs
 {
 }
 
-Rectangle::Rectangle(int x, int y, int w, int h) : x(x), y(y), w(w), h(h)
+Rectangle::Rectangle(int x_, int y_, int w_, int h_) : x(x_), y(y_), w(w_), h(h_)
 {
 }
 
-void Rectangle::SetBounds(int x, int y, int w, int h)
+void Rectangle::SetBounds(int x_, int y_, int w_, int h_)
 {
-	this->x = x; this->y = y; this->w = w; this->h = h;
+	this->x = x_; this->y = y_; this->w = w_; this->h = h_;
 }

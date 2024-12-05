@@ -17,8 +17,7 @@ public:
 	int height;
 
 	Game(int width, int height, std::string_view title);		
-	void Update(double dt);
+	void Update();
 	void Render(SDL_Renderer* r);
-	void OnKeyDown(SDL_Keycode key);
-	void OnKeyUp(SDL_Keycode key);
+	void OnKeyDown(SDL_Keycode key);	
 };

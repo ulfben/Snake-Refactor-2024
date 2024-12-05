@@ -4,29 +4,21 @@
 #include "Color.h"
 #include "Rectangle.h"
 #include "SDL.h"
-
-struct RenderManager;
-
 struct Player
 {
-	struct PlayerPart
-	{
-		Transform trans;
-		Color color;
+	struct PlayerPart	{
+		Transform trans;		
 		Rectangle rect;
 	};
-
-	//Static == belongs to the class, not the object of the class.
+		
 	static const int player_size = 50;
-	PlayerPart parts[player_size];
-	
-	Transform trans;
-	Color color;
+	PlayerPart parts[player_size];	
+	Transform trans;	
 	Rectangle rect;
 	void OnKeyDown(SDL_Keycode key);
 	void Initialize();
 	void Render(SDL_Renderer* renderManager);				// A reference or pointer doesn't need to be #include, just a forward declare.
-	void Update(double dt);
+	void Update();
 	void ResetPlayer();
 
 	int size = 10;

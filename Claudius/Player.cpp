@@ -1,22 +1,20 @@
 #include "Player.h"
 #include <cmath>
+#include "SDLUtils.h"
 
-
-void Player::Initialize(){
-    color.SetColor(0, 255, 0, 0);
+void Player::Initialize(){    
     rect.SetBounds(0, 0, size, size);
     trans.SetPosition(starting_x, starting_y);
     player_score = 0;
 
-    for(int i = 0; i < player_size; i++){
-        parts[i].color.SetColor(255, 0, 0, 0);
+    for(int i = 0; i < player_size; i++){        
         parts[i].rect.SetBounds(0, 0, size, size);
         parts[i].trans.SetPosition(trans.GetX(), trans.GetY());
     }
 }
 
 void Player::Render(SDL_Renderer* r){
-    SDL_SetRenderDrawColor(r, color.r, color.g, color.b, color.a);    
+    SetRenderDrawColor(r, Color::GREEN);    
     SDL_Rect sdlr{ (int)trans.position.x,  (int)trans.position.y, rect.w, rect.h};
     SDL_RenderFillRect(r, &sdlr); 
     for(int i = 0; i < player_score; i++){                
@@ -24,12 +22,12 @@ void Player::Render(SDL_Renderer* r){
              static_cast<int>(parts[i].trans.position.y),
              rect.w,
              rect.h};    
-        SDL_SetRenderDrawColor(r, parts[i].color.r, parts[i].color.g, parts[i].color.b, parts[i].color.a);    
+        SetRenderDrawColor(r, Color::GREEN);    
         SDL_RenderFillRect(r, &sdlr);
     }
 }
 
-void Player::Update(double dt){
+void Player::Update(){
     x_array_difference[0] = trans.GetX() - parts[0].trans.GetX();
     y_array_difference[0] = trans.GetY() - parts[0].trans.GetY();
 

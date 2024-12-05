@@ -9,8 +9,7 @@ struct Apple
 	void Render(SDL_Renderer* r);
 	void Initialize(unsigned int width, unsigned int height);
 
-	Rectangle rect;
-	Color color;
+	Rectangle rect;	
 	Transform trans;
 
 	bool new_apple = false;

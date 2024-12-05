@@ -1,7 +1,6 @@
 // 2019-12-05 Teemu Laiho
 
 #include "Game.h"
-#include "RenderManager.h"
 #include <iostream>
 #include "SDL.h"
 
@@ -16,7 +15,7 @@ Game::Game(int width, int height, std::string_view title){
 
 
 
-void Game::Update(double dt){
+void Game::Update(){
   // dt means delta time.
   // timer += dt; <- check Game.h
   // if (timer > updateInterval)
@@ -25,7 +24,7 @@ void Game::Update(double dt){
   // timer = 0.0f; or timer -= updateInterval;
   //}
 
-    playerOne.Update(dt);
+    playerOne.Update();
 
     // Player colliding on theirself.
     for(int i = 0; i < playerOne.player_score; i++){
@@ -63,4 +62,4 @@ void Game::OnKeyDown(SDL_Keycode key){
     playerOne.OnKeyDown(key);
 }
 
-void Game::OnKeyUp(SDL_Keycode key){}
+

@@ -24,14 +24,14 @@ void Transform::ChangePosition(const float x, const float y)
 	position.y += y;
 }
 
-void Transform::SetRotation(const float rotation)
+void Transform::SetRotation(const float rotation_)
 {
-	this->rotation = rotation;
+	this->rotation = rotation_;
 }
 
-void Transform::ChangeRotation(const float rotation)
+void Transform::ChangeRotation(const float rotation_)
 {
-	this->rotation += rotation;
+	this->rotation += rotation_;
 }
 
 Vector2 Transform::GetPosition()
