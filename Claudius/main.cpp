@@ -1,31 +1,23 @@
 ﻿#include "SDLSystem.h"
 #include "Game.h"
+#include "Window.h"
 #include <stdexcept>
 #undef main
 
 int main(){
+    constexpr std::string_view title = "Snake";
+    constexpr unsigned width = 1250;
+    constexpr unsigned height = 700;   
     SDLSystem init{};
-
-    SDL_Window* window = SDL_CreateWindow("Base", 0, 0, 0, 0, SDL_WindowFlags::SDL_WINDOW_RESIZABLE);
-    if(window == nullptr){
-        [[maybe_unused]]const char* error = SDL_GetError();
-        return 0;
-    }
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RendererFlags::SDL_RENDERER_ACCELERATED);
+    Window w{title, width, height};
+    
+    SDL_Renderer* renderer = SDL_CreateRenderer(w.get(), -1, SDL_RendererFlags::SDL_RENDERER_ACCELERATED);
     if(renderer == nullptr){
         [[maybe_unused]] const char* error = SDL_GetError();
         return 0;
     }
-    bool running = true; 
-    
-    int width = 1250;
-    int height = 700;    
-    Game game(width, height, "Snake");
-    
-    SDL_SetWindowSize(window, width, height);
-    SDL_SetWindowTitle(window, "Snake");
-    SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-    
+    bool running = true;        
+    Game game(width, height, title);    
     while(running){
         SDL_Event e;
         while(SDL_PollEvent(&e)){
@@ -40,8 +32,5 @@ int main(){
     }
 
     SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    //TODO: SDL_ deinit? 
-
     return 0;
 }
