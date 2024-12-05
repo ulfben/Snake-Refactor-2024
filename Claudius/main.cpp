@@ -1,9 +1,14 @@
-﻿#include "SDL.h"
+﻿#include "SDLSystem.h"
 #include "Game.h"
+#include <stdexcept>
 #undef main
 
+
+
+
 int main(){
-    SDL_Init(SDL_INIT_EVERYTHING);
+    SDLSystem init();
+
     SDL_Window* window = SDL_CreateWindow("Base", 0, 0, 0, 0, SDL_WindowFlags::SDL_WINDOW_RESIZABLE);
     if(window == nullptr){
         const char* error = SDL_GetError();

@@ -18,14 +18,14 @@ void Player::Initialize(){
 void Player::Render(SDL_Renderer* r){
     SDL_SetRenderDrawColor(r, color.r, color.g, color.b, color.a);    
     SDL_Rect sdlr{ (int)trans.position.x,  (int)trans.position.y, rect.w, rect.h};
-    SDL_RenderFillRect(r, &sdlr);  // <- If you want to draw a "filled" rectangle.     
+    SDL_RenderFillRect(r, &sdlr); 
     for(int i = 0; i < player_score; i++){                
         sdlr = {static_cast<int>(parts[i].trans.position.x),
              static_cast<int>(parts[i].trans.position.y),
              rect.w,
              rect.h};    
         SDL_SetRenderDrawColor(r, parts[i].color.r, parts[i].color.g, parts[i].color.b, parts[i].color.a);    
-        SDL_RenderFillRect(r, &sdlr);  // <- If you want to draw a "filled" rectangle. 
+        SDL_RenderFillRect(r, &sdlr);
     }
 }
 
