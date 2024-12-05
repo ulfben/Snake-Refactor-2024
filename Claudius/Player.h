@@ -3,7 +3,7 @@
 #include "Transform.h"
 #include "Color.h"
 #include "Rectangle.h"
-#include "KeyCode.h"
+#include "SDL.h"
 
 struct RenderManager;
 
@@ -23,9 +23,9 @@ struct Player
 	Transform trans;
 	Color color;
 	Rectangle rect;
-	void OnKeyDown(KeyCode key);
+	void OnKeyDown(SDL_Keycode key);
 	void Initialize();
-	void Render(RenderManager& renderManager);				// A reference or pointer doesn't need to be #include, just a forward declare.
+	void Render(SDL_Renderer* renderManager);				// A reference or pointer doesn't need to be #include, just a forward declare.
 	void Update(double dt);
 	void ResetPlayer();
 

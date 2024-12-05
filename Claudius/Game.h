@@ -1,20 +1,11 @@
 #pragma once
-
-#include <string>
-#include <vector>
-#include "KeyCode.h"
 #include "Apple.h"
 #include "Player.h"
-
-struct RenderManager;
-struct ResourceManager;
-
+#include <string_view>
 class Game
 {
 	Player playerOne;
 	Apple apple;
-
-	ResourceManager& m_resourceManager;
 
 public:
 	//Teemu Code Begin.
@@ -25,11 +16,9 @@ public:
 	int width;
 	int height;
 
-	Game(ResourceManager& resourceManager);
-	~Game();
-	bool Enter(int& width, int& height, std::string& title);
+	Game(int width, int height, std::string_view title);		
 	void Update(double dt);
-	void Render(RenderManager& rendererManager);
-	void OnKeyDown(KeyCode key);
-	void OnKeyUp(KeyCode key);
+	void Render(SDL_Renderer* r);
+	void OnKeyDown(SDL_Keycode key);
+	void OnKeyUp(SDL_Keycode key);
 };

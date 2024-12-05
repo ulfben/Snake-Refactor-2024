@@ -1,7 +1,6 @@
 #include "Player.h"
 #include <cmath>
-#include "RenderManager.h"
-#include <iostream>
+
 
 void Player::Initialize(){
     color.SetColor(0, 255, 0, 0);
@@ -16,11 +15,17 @@ void Player::Initialize(){
     }
 }
 
-void Player::Render(RenderManager& renderManager){
-    renderManager.Render(rect, color, trans);
-
-    for(int i = 0; i < player_score; i++){
-        renderManager.Render(parts[i].rect, parts[i].color, parts[i].trans);
+void Player::Render(SDL_Renderer* r){
+    SDL_SetRenderDrawColor(r, color.r, color.g, color.b, color.a);    
+    SDL_Rect sdlr{ (int)trans.position.x,  (int)trans.position.y, rect.w, rect.h};
+    SDL_RenderFillRect(r, &sdlr);  // <- If you want to draw a "filled" rectangle.     
+    for(int i = 0; i < player_score; i++){                
+        sdlr = {static_cast<int>(parts[i].trans.position.x),
+             static_cast<int>(parts[i].trans.position.y),
+             rect.w,
+             rect.h};    
+        SDL_SetRenderDrawColor(r, parts[i].color.r, parts[i].color.g, parts[i].color.b, parts[i].color.a);    
+        SDL_RenderFillRect(r, &sdlr);  // <- If you want to draw a "filled" rectangle. 
     }
 }
 
@@ -64,23 +69,23 @@ void Player::Update(double dt){
     }
 }
 
-void Player::OnKeyDown(KeyCode key){
-    if(key == KeyCode::LEFT_ARROW){
+void Player::OnKeyDown(SDL_Keycode key){
+    if(key == SDLK_LEFT){
         moving_left = true;
         moving_right = false;
         moving_up = false;
         moving_down = false;
-    } else if(key == KeyCode::RIGHT_ARROW){
+    } else if(key == SDLK_RIGHT){
         moving_left = false;
         moving_right = true;
         moving_up = false;
         moving_down = false;
-    } else if(key == KeyCode::UP_ARROW){
+    } else if(key == SDLK_UP){
         moving_left = false;
         moving_right = false;
         moving_up = true;
         moving_down = false;
-    } else if(key == KeyCode::DOWN_ARROW){
+    } else if(key == SDLK_DOWN){
         moving_left = false;
         moving_right = false;
         moving_up = false;
