@@ -3,7 +3,6 @@
 #include "SDLUtils.h"
 #include "Color.h"
 #include "Vector2.h"
-
 struct Apple{
     Vector2 pos{100, 200};
     void Render(SDL_Renderer* r) const noexcept{
