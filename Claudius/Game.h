@@ -52,8 +52,8 @@ private:
     };
     void Render() const noexcept{
         renderer.clear(Color::BLACK);
-        snake.Render(renderer.get());
-        apple.Render(renderer.get());
+        snake.render(renderer);
+        apple.render(renderer);
         renderer.present();
     }
 };

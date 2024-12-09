@@ -20,4 +20,8 @@ struct Renderer{
     void present() const noexcept{
         SDL_RenderPresent(get());
     }
+    void draw(SDL_Rect r, SDL_Color c) const noexcept{
+        SetRenderDrawColor(get(), c);        
+        SDL_RenderFillRect(get(), &r);
+    }
 };

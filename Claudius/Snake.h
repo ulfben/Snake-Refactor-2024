@@ -33,15 +33,13 @@ struct Snake{
     void Update() noexcept{
         head += velocity;
     }
-    void Render(SDL_Renderer* r) const noexcept{
-        SetRenderDrawColor(r, Color::GREEN);
+    void render(const Renderer& r) const noexcept{        
         for(auto part : parts){
             SDL_Rect sdlr = {static_cast<int>(part.x),
                  static_cast<int>(part.y),
                  TILE_SIZE,
                  TILE_SIZE};
-            SetRenderDrawColor(r, Color::GREEN);
-            SDL_RenderFillRect(r, &sdlr);
+            r.draw(sdlr, Color::GREEN);            
         }
     }
     void grow() noexcept{
