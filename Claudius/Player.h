@@ -15,6 +15,7 @@ struct Player
 	PlayerPart parts[player_size];	
 	Transform trans;	
 	Rectangle rect;
+	Player();
 	void OnKeyDown(SDL_Keycode key);
 	void Initialize();
 	void Render(SDL_Renderer* renderManager);				// A reference or pointer doesn't need to be #include, just a forward declare.

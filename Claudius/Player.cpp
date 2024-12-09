@@ -2,7 +2,7 @@
 #include <cmath>
 #include "SDLUtils.h"
 
-void Player::Initialize(){    
+Player::Player(){    
     rect.SetBounds(0, 0, size, size);
     trans.SetPosition(starting_x, starting_y);
     player_score = 0;

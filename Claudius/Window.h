@@ -13,7 +13,19 @@ public:
         if(ptr == nullptr){
             throw std::runtime_error(SDL_GetError());
         }
-    }  
+    } 
+    int width() const noexcept{
+        int w = 0;
+        int h = 0;
+        SDL_GetWindowSize(get(), &w, &h);
+        return w;
+    }
+    int height() const noexcept{
+        int w = 0;
+        int h = 0;
+        SDL_GetWindowSize(get(), &w, &h);
+        return h;
+    }    
     void setWindowSize(unsigned width, unsigned height) const noexcept{
         SDL_SetWindowSize(get(), width, height);
     }

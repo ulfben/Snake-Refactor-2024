@@ -6,8 +6,8 @@
 
 struct Apple
 {	
-	void Render(SDL_Renderer* r);
-	void Initialize(unsigned int width, unsigned int height);
+		Apple();
+	void Render(SDL_Renderer* r);	
 
 	Rectangle rect;	
 	Transform trans;

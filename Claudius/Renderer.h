@@ -13,4 +13,11 @@ struct Renderer{
         }
     }
     SDL_Renderer* get() const noexcept{ return ptr.get(); }
+    void clear(SDL_Color c) const noexcept{
+        SetRenderDrawColor(get(), c);
+        SDL_RenderClear(get());
+    }
+    void present() const noexcept{
+        SDL_RenderPresent(get());
+    }
 };

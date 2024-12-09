@@ -3,8 +3,8 @@
 #include "SDLUtils.h"
 #include "Color.h"
 
-void Apple::Initialize(unsigned int width, unsigned int height){    
-    rect.SetBounds(0, 0, width, height);
+Apple::Apple(){    
+    rect.SetBounds(0, 0, 10, 10);
     trans.SetPosition(100, 200);    
 }
 
