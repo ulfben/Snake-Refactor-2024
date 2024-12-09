@@ -10,37 +10,37 @@ static constexpr auto SLEEP_TIME = 1000 / 20;
 class Game{
 public:
     Game(int width, int height, std::string_view title)
-        : window(title, width, height), renderer(window){}
+        : window(title, width, height), r(window){}
     void run() noexcept {
         while(isRunning){
-            Input();
-            Update();
-            Render();
+            input();
+            update();
+            render();
             SDL_Delay(SLEEP_TIME);
         }
     }
 private: 
     SDLSystem init{};
     Window window;
-    Renderer renderer;    
+    Renderer r;    
     Snake snake;
     Apple apple;
     bool isRunning = true;
 
-    void Input() noexcept{
+    void input() noexcept{
         SDL_Event e;
         while(SDL_PollEvent(&e)){
             if(e.type == SDL_QUIT){
                 isRunning = false;
             } else if(e.type == SDL_KEYDOWN){
                 const auto key = e.key.keysym.sym;
-                snake.OnKeyDown(key);
+                snake.onKeyDown(key);
                 isRunning = (key != SDLK_ESCAPE && key != SDLK_q);
             }
         }
     }
-    void Update() noexcept {
-        snake.Update();                               
+    void update() noexcept {
+        snake.update();                               
         if(snake.isSelfColliding() || 
             !snake.isInside({0, 0, window.width(), window.height()})){
             snake = {};
@@ -50,10 +50,10 @@ private:
             snake.grow();
         }        
     };
-    void Render() const noexcept{
-        renderer.clear(Color::BLACK);
-        snake.render(renderer);
-        apple.render(renderer);
-        renderer.present();
+    void render() const noexcept{
+        r.clear(Color::BLACK);
+        snake.render(r);
+        apple.render(r);
+        r.present();
     }
 };

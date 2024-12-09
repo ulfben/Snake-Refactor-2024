@@ -19,7 +19,7 @@ struct Snake{
     Vector2 head{starting_x, starting_y};
     std::vector<Vector2> parts = {head};
     Vector2 velocity = NONE;
-    void OnKeyDown(SDL_Keycode key) noexcept{
+    void onKeyDown(SDL_Keycode key) noexcept{
         if(key == SDLK_LEFT){
             velocity = LEFT;
         } else if(key == SDLK_RIGHT){
@@ -30,7 +30,7 @@ struct Snake{
             velocity = DOWN;
         }
     }
-    void Update() noexcept{
+    void update() noexcept{
         head += velocity;
     }
     void render(const Renderer& r) const noexcept{        
