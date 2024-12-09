@@ -34,7 +34,7 @@ void Transform::ChangeRotation(const float rotation_)
 	this->rotation += rotation_;
 }
 
-Vector2 Transform::GetPosition()
+Vector2 Transform::GetPosition() const noexcept
 {
 	return position;
 }

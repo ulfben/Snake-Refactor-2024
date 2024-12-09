@@ -13,7 +13,7 @@ struct Transform
 	void SetRotation(const float rotation);
 	void ChangeRotation(const float rotation);
 
-	Vector2 GetPosition();
+	Vector2 GetPosition() const noexcept;
 	float GetX();
 	float GetY();
 	float GetRotation();

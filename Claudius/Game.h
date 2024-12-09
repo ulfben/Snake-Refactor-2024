@@ -7,6 +7,7 @@
 #include "Renderer.h"
 #include <string_view>
 
+static constexpr auto SLEEP_TIME = 1000 / 20;
 class Game{
     SDLSystem init{};
     Window w;
@@ -15,17 +16,10 @@ class Game{
     Player playerOne;
     Apple apple;
     void Update(){
-        playerOne.Update();
-
-        // Player colliding on theirself.
-        for(int i = 0; i < playerOne.player_score; i++){
-            if(playerOne.trans.GetPosition() == playerOne.parts[i].trans.GetPosition()){
-                playerOne.ResetPlayer();
-            }
-        }
+        playerOne.Update();               
 
         // Player going out of X bounds.
-        if(playerOne.trans.GetX() > w.width() || playerOne.trans.GetX() < 0){
+        if(playerOne.isSelfColliding() || playerOne.trans.GetX() > w.width() || playerOne.trans.GetX() < 0){
             playerOne.ResetPlayer();
         }
 
@@ -51,12 +45,12 @@ class Game{
         while(SDL_PollEvent(&e)){
             if(e.type == SDL_QUIT){
                 running = false;
-            }else if(e.type == SDL_KEYDOWN){
+            } else if(e.type == SDL_KEYDOWN){
                 auto key = e.key.keysym.sym;
                 playerOne.OnKeyDown(key);
                 running = (key != SDLK_ESCAPE && key != SDLK_q);
             }
-        }        
+        }
     }
 public:
     Game(int width, int height, std::string_view title)
@@ -66,7 +60,7 @@ public:
             Input();
             Update();
             Render();
-            SDL_Delay(1000 / 20); //<- "Framerate".
+            SDL_Delay(SLEEP_TIME);
         }
     }
 };
