@@ -1,7 +1,7 @@
 ﻿#include "Game.h"
+#include <string_view>
 #include <iostream>
 #include <stdexcept>
-#include <print>
 #undef main
 static constexpr std::string_view title = "Snake";
 static constexpr unsigned width = 1250;

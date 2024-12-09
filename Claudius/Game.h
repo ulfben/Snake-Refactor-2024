@@ -49,7 +49,7 @@ private:
             apple = {};
             snake.grow();
         }        
-    };
+    }
     void render() const noexcept{
         r.clear(Color::BLACK);
         snake.render(r);

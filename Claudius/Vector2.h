@@ -1,4 +1,5 @@
 #pragma once
+//TODO: make vector2 a Coordinate of ints.
 struct Vector2 final{
     float x{};
     float y{};
