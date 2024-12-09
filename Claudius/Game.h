@@ -2,7 +2,7 @@
 #include "SDLSystem.h"
 #include "SDLUtils.h"
 #include "Apple.h"
-#include "Player.h"
+#include "Snake.h"
 #include "Window.h"
 #include "Renderer.h"
 #include <string_view>
@@ -23,7 +23,7 @@ private:
     SDLSystem init{};
     Window w;
     Renderer r;    
-    Player player;
+    Snake player;
     Apple apple;
     bool running = true;
 

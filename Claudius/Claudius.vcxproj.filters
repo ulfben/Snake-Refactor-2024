@@ -18,7 +18,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="Snake.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Vector2.cpp">
@@ -50,7 +50,7 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="Snake.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

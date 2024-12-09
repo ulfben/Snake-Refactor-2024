@@ -10,7 +10,7 @@ constexpr float movement_speed = 10.0f;
 constexpr float starting_x = 300.0f;
 constexpr float starting_y = 300.0f;
 constexpr int player_size = 50;
-struct Player{
+struct Snake{
     Vector2 head{starting_x, starting_y};
     std::vector<Vector2> parts =  {head};
     void OnKeyDown(SDL_Keycode key);

@@ -1,8 +1,8 @@
-#include "Player.h"
+#include "Snake.h"
 #include <cmath>
 #include "SDLUtils.h"
 
-void Player::Update(){
+void Snake::Update(){
     
 
     if(moving_left == true){
@@ -36,7 +36,7 @@ void Player::Update(){
     }
 }
 
-void Player::OnKeyDown(SDL_Keycode key){
+void Snake::OnKeyDown(SDL_Keycode key){
     if(key == SDLK_LEFT){
         moving_left = true;
         moving_right = false;
@@ -60,7 +60,7 @@ void Player::OnKeyDown(SDL_Keycode key){
     }
 }
 
-void Player::ResetPlayer(){
+void Snake::ResetPlayer(){
     moving_right = false;
     moving_left = false;
     moving_up = false;
