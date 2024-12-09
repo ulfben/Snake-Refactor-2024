@@ -151,12 +151,11 @@
     <ClInclude Include="Apple.h" />
     <ClInclude Include="Configs.h" />
     <ClInclude Include="Snake.h" />
-    <ClInclude Include="Color.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="SDLSystem.h" />
     <ClInclude Include="SDLUtils.h" />
-    <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Cell.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

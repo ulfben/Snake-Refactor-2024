@@ -50,7 +50,7 @@ private:
         }        
     }
     void render() const noexcept{
-        r.clear(Color::BLACK);
+        r.clear(BLACK);
         snake.render(r);
         apple.render(r);
         r.present();

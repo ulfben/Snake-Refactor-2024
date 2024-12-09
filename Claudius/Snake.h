@@ -1,24 +1,22 @@
 #pragma once
 #include <vector>
 #include <algorithm>
-#include "Vector2.h"
-#include "Color.h"
+#include "Cell.h"
 #include "SDL.h"
 #include "SDLUtils.h"
 #include "Configs.h"
-constexpr Vector2 LEFT  = {-SPEED, 0};
-constexpr Vector2 RIGHT = {SPEED, 0};
-constexpr Vector2 UP    = {0, -SPEED};
-constexpr Vector2 DOWN  = {0, SPEED};
-constexpr Vector2 STILL = {0, 0};
-
+constexpr Cell LEFT  = {-SPEED, 0};
+constexpr Cell RIGHT = {SPEED, 0};
+constexpr Cell UP    = {0, -SPEED};
+constexpr Cell DOWN  = {0, SPEED};
+constexpr Cell STILL = {0, 0};
 class Snake{
-    std::vector<Vector2> parts = {1, {starting_x, starting_y}};
-    Vector2 heading = STILL;      
+    std::vector<Cell> parts = {1, {starting_x, starting_y}};
+    Cell heading = STILL;      
 
-    Vector2& head() noexcept{ return *parts.begin(); }
-    const Vector2& head() const noexcept{ return *parts.begin(); }
-    Vector2 position() const noexcept{ return parts.front(); }
+    Cell& head() noexcept{ return *parts.begin(); }
+    const Cell& head() const noexcept{ return *parts.begin(); }
+    Cell position() const noexcept{ return parts.front(); }
     bool hasTail() const noexcept{ return parts.size() > 1; }
 
 public:
@@ -38,11 +36,9 @@ public:
         head() += heading;
     }
     void render(const Renderer& r) const noexcept{
-        for(auto part : parts){
-            SDL_Rect sdlr = {static_cast<int>(part.x), static_cast<int>(part.y),
-                 CELL_SIZE,
-                 CELL_SIZE};
-            r.draw(sdlr, Color::GREEN);
+        r.setColor(GREEN);
+        for(auto part : parts){            
+            r.drawCell(part.x, part.y);
         }
     }
     void grow() noexcept{
@@ -52,7 +48,7 @@ public:
           /*swallowing exception. The game can keep running, the snake won't grow.*/
         }
     }
-    bool isCollidingWith(Vector2 pos) const noexcept{                
+    bool isCollidingWith(Cell pos) const noexcept{                
         return std::ranges::any_of(parts,
             [pos](const auto& piece) constexpr { return piece == pos; });
     }
