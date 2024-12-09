@@ -17,15 +17,15 @@ struct Renderer{
     void setColor(SDL_Color c) const noexcept{
         SDL_SetRenderDrawColor(get(), c.r, c.g, c.b, c.a);
     }
+    void drawCell(int x, int y) const noexcept{
+        SDL_Rect r = {x, y, CELL_SIZE, CELL_SIZE};
+        SDL_RenderFillRect(get(), &r);
+    }
     void clear(SDL_Color c) const noexcept{
         setColor(c);
         SDL_RenderClear(get());
     }
     void present() const noexcept{
         SDL_RenderPresent(get());
-    }   
-    void drawCell(int x, int y) const noexcept{
-        SDL_Rect r = {x, y, CELL_SIZE, CELL_SIZE};
-        SDL_RenderFillRect(get(), &r);
-    }
+    }      
 };

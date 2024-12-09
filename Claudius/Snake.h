@@ -56,9 +56,9 @@ public:
          return hasTail() && std::any_of(parts.begin()+1, parts.end(),
             [pos = head()](const auto& piece) constexpr { return piece == pos; });
     }
-    bool isInside(SDL_Rect bounds) const noexcept{
-        bounds.h -= CELL_SIZE;
-        bounds.w -= CELL_SIZE;
+    bool isInside(SDL_Rect bounds) const noexcept{        
+        bounds.x -= CELL_SIZE;
+        bounds.y -= CELL_SIZE;
         return head().x > bounds.x && head().x < bounds.w &&
             head().y > bounds.y && head().y < bounds.h;
     }  
