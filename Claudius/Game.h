@@ -10,9 +10,9 @@ static constexpr auto SLEEP_TIME = 1000 / 20;
 class Game{
 public:
     Game(int width, int height, std::string_view title)
-        : w(title, width, height), r(w){}
+        : window(title, width, height), renderer(window){}
     void run() noexcept {
-        while(running){
+        while(isRunning){
             Input();
             Update();
             Render();
@@ -21,38 +21,39 @@ public:
     }
 private: 
     SDLSystem init{};
-    Window w;
-    Renderer r;    
-    Snake player;
+    Window window;
+    Renderer renderer;    
+    Snake snake;
     Apple apple;
-    bool running = true;
+    bool isRunning = true;
 
     void Input() noexcept{
         SDL_Event e;
         while(SDL_PollEvent(&e)){
             if(e.type == SDL_QUIT){
-                running = false;
+                isRunning = false;
             } else if(e.type == SDL_KEYDOWN){
                 const auto key = e.key.keysym.sym;
-                player.OnKeyDown(key);
-                running = (key != SDLK_ESCAPE && key != SDLK_q);
+                snake.OnKeyDown(key);
+                isRunning = (key != SDLK_ESCAPE && key != SDLK_q);
             }
         }
     }
     void Update() noexcept {
-        player.Update();                               
-        if(player.isSelfColliding() || 
-            !player.isInside({0, 0, w.width(), w.height()})){
-            player = {};
+        snake.Update();                               
+        if(snake.isSelfColliding() || 
+            !snake.isInside({0, 0, window.width(), window.height()})){
+            snake = {};
         }        
-        if(player.isCollidingWith(apple.pos)){            
+        if(snake.isCollidingWith(apple.pos)){            
             apple = {};
+            snake.grow();
         }        
     };
     void Render() const noexcept{
-        r.clear(Color::BLACK);
-        player.Render(r.get());
-        apple.Render(r.get());
-        r.present();
+        renderer.clear(Color::BLACK);
+        snake.Render(renderer.get());
+        apple.Render(renderer.get());
+        renderer.present();
     }
 };

@@ -35,22 +35,29 @@ struct Snake{
     }
     void Render(SDL_Renderer* r) const noexcept{
         SetRenderDrawColor(r, Color::GREEN);
-        SDL_Rect sdlr{(int) head.x,  (int) head.y, TILE_SIZE, TILE_SIZE};
-        SDL_RenderFillRect(r, &sdlr);
         for(auto part : parts){
-            sdlr = {static_cast<int>(part.x),
+            SDL_Rect sdlr = {static_cast<int>(part.x),
                  static_cast<int>(part.y),
                  TILE_SIZE,
                  TILE_SIZE};
             SetRenderDrawColor(r, Color::GREEN);
             SDL_RenderFillRect(r, &sdlr);
         }
-    }        
+    }
+    void grow() noexcept{
+        try{
+            parts.emplace_back(head);
+        } catch(...){
+          /*swallowing exception. The game can keep running, the snake won't grow.*/
+        }
+    }
     bool isSelfColliding() const noexcept{
         return std::any_of(parts.begin(), parts.end(),
             [head = this->head](auto part) constexpr noexcept{ return part == head; });
     }
     bool isInside(SDL_Rect bounds) const noexcept{
+        bounds.h -= TILE_SIZE;
+        bounds.w -= TILE_SIZE;
         return head.x > bounds.x && head.x < bounds.w &&
             head.y > bounds.y && head.y < bounds.h;
     }
