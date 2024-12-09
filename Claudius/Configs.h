@@ -1,4 +1,6 @@
 #pragma once
+#include <string_view>
+#include "SDL.h"
 static constexpr std::string_view GAME_TITLE = "Snake";
 static constexpr auto TICK_RATE = 15; // ticks per second
 static constexpr auto FRAME_DELAY = 1000 / TICK_RATE;

@@ -10,7 +10,7 @@ constexpr Cell DOWN  = {0, SPEED};
 constexpr Cell STILL = {0, 0};
 class Snake final{
     std::vector<Cell> parts = {1, {starting_x, starting_y}};
-    Cell heading = STILL;      
+    Cell heading = STILL;
 
     Cell& head() noexcept{ return *parts.begin(); }
     const Cell& head() const noexcept{ return *parts.begin(); }

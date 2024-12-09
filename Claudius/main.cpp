@@ -1,8 +1,7 @@
-﻿#include "Game.h"
-#include <string_view>
+﻿#include "Configs.h"
+#include "Game.h"
+#include <print>
 #include <iostream>
-#include <stdexcept>
-#include "Configs.h"
 #undef main
 
 int main(){

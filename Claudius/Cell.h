@@ -11,5 +11,5 @@ struct Cell final{
         x += rhs.x;
         y += rhs.y;
         return *this;
-    };
+    }
 };
