@@ -13,30 +13,29 @@ class Game{
     Window w;
     Renderer r;
     bool running = true;
-    Player playerOne;
+    Player player;
     Apple apple;
     void Update(){
-        playerOne.Update();               
-
-        // Player going out of X bounds.
-        if(playerOne.isSelfColliding() || playerOne.trans.GetX() > w.width() || playerOne.trans.GetX() < 0){
-            playerOne.ResetPlayer();
+        player.Update();                               
+        if(player.isSelfColliding() || 
+            !player.isInside({0, 0, w.width(), w.height()})){
+            player.ResetPlayer();
         }
 
         // Player going out of Y bounds.
-        if(playerOne.trans.GetY() > w.height() || playerOne.trans.GetY() < 0){
-            playerOne.ResetPlayer();
+        if(player.trans.GetY() > w.height() || player.trans.GetY() < 0){
+            player.ResetPlayer();
         }
 
         // Player collide on apple.
-        if(playerOne.trans.GetPosition() == apple.trans.GetPosition()){
-            playerOne.player_score++;
+        if(player.trans.GetPosition() == apple.trans.GetPosition()){
+            player.player_score++;
             apple.trans.SetPosition((rand() % 125) * 10.0f, (rand() % 70) * 10.0f);
         }
     };
     void Render(){
         r.clear(Color::BLACK);
-        playerOne.Render(r.get());
+        player.Render(r.get());
         apple.Render(r.get());
         r.present();
     }
@@ -47,7 +46,7 @@ class Game{
                 running = false;
             } else if(e.type == SDL_KEYDOWN){
                 auto key = e.key.keysym.sym;
-                playerOne.OnKeyDown(key);
+                player.OnKeyDown(key);
                 running = (key != SDLK_ESCAPE && key != SDLK_q);
             }
         }

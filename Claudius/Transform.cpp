@@ -39,12 +39,12 @@ Vector2 Transform::GetPosition() const noexcept
 	return position;
 }
 
-float Transform::GetX()
+float Transform::GetX() const noexcept
 {
 	return position.x;
 }
 
-float Transform::GetY()
+float Transform::GetY() const noexcept
 {
 	return position.y;
 }

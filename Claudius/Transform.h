@@ -14,8 +14,8 @@ struct Transform
 	void ChangeRotation(const float rotation);
 
 	Vector2 GetPosition() const noexcept;
-	float GetX();
-	float GetY();
+	float GetX() const noexcept;
+	float GetY() const noexcept;
 	float GetRotation();
 
 	Vector2 position;

@@ -27,6 +27,11 @@ struct Player{
         }
         return false;
     }
+    bool isInside(SDL_Rect bounds) const noexcept{
+        return trans.GetX() > bounds.x && trans.GetX() < bounds.w &&
+            trans.GetY() > bounds.y && trans.GetY() < bounds.h;
+    }
+
     int size = 10;
     const float movement_speed = 10.0f;
     const float starting_x = 300.0f;
