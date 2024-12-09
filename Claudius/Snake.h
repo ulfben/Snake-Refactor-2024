@@ -18,20 +18,20 @@ constexpr Vector2 NONE = {0, 0};
 struct Snake{
     Vector2 head{starting_x, starting_y};
     std::vector<Vector2> parts = {head};
-    Vector2 velocity = NONE;
+    Vector2 heading = NONE;
     void onKeyDown(SDL_Keycode key) noexcept{
-        if(key == SDLK_LEFT){
-            velocity = LEFT;
-        } else if(key == SDLK_RIGHT){
-            velocity = RIGHT;
-        } else if(key == SDLK_UP){
-            velocity = UP;
-        } else if(key == SDLK_DOWN){
-            velocity = DOWN;
-        }
+        if(key == SDLK_LEFT && heading != RIGHT){
+            heading = LEFT;
+        } else if(key == SDLK_RIGHT && heading != LEFT){
+            heading = RIGHT;
+        } else if(key == SDLK_UP && heading != DOWN){
+            heading = UP;
+        } else if(key == SDLK_DOWN && heading != UP){
+            heading = DOWN;
+        }    
     }
     void update() noexcept{
-        head += velocity;
+        head += heading;
     }
     void render(const Renderer& r) const noexcept{        
         for(auto part : parts){
