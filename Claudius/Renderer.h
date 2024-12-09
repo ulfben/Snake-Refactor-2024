@@ -11,7 +11,7 @@ struct Renderer final {
         if(!ptr){
             throw SDLInitError();
         }
-    }
+    }    
     SDL_Renderer* get() const noexcept{ return ptr.get(); }
     void setColor(SDL_Color c) const noexcept{
         SDL_SetRenderDrawColor(get(), c.r, c.g, c.b, c.a);
