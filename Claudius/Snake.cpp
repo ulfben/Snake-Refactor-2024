@@ -6,28 +6,28 @@ void Snake::Update(){
     
 
     if(moving_left == true){
-        head += {-movement_speed, 0};
+        head += {-SPEED, 0};
         parts[0] += {x_array_difference[0], y_array_difference[0]};
 
         for(int i = 1; i < player_size; i++){
             parts[i] += Vector2(x_array_difference[i - 1], y_array_difference[i - 1]);
         }
     } else if(moving_right == true){
-        head += Vector2(movement_speed, 0);
+        head += Vector2(SPEED, 0);
         parts[0] += Vector2(x_array_difference[0], y_array_difference[0]);
 
         for(int i = 1; i < player_size; i++){
             parts[i] += Vector2(x_array_difference[i - 1], y_array_difference[i - 1]);
         }
     } else if(moving_up == true){
-        head += Vector2(0, -movement_speed);
+        head += Vector2(0, -SPEED);
         parts[0] += Vector2(x_array_difference[0], y_array_difference[0]);
 
         for(int i = 1; i < player_size; i++){
             parts[i] += Vector2(x_array_difference[i - 1], y_array_difference[i - 1]);
         }
     } else if(moving_down == true){
-        head += Vector2(0, movement_speed);
+        head += Vector2(0, SPEED);
         parts[0] += Vector2(x_array_difference[0], y_array_difference[0]);
 
         for(int i = 1; i < player_size; i++){

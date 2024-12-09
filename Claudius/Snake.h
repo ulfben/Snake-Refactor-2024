@@ -6,13 +6,19 @@
 #include "SDL.h"
 #include "SDLUtils.h"
 constexpr int TILE_SIZE = 10;
-constexpr float movement_speed = 10.0f;
+constexpr float SPEED = 10.0f;
 constexpr float starting_x = 300.0f;
 constexpr float starting_y = 300.0f;
-constexpr int player_size = 50;
+constexpr Vector2 LEFT =  {-SPEED, 0};
+constexpr Vector2 RIGHT = {SPEED, 0};
+constexpr Vector2 UP    = {0, -SPEED};
+constexpr Vector2 DOWN  = {0, SPEED};
+constexpr Vector2 NONE  = {0, 0};
+
 struct Snake{
     Vector2 head{starting_x, starting_y};
-    std::vector<Vector2> parts =  {head};
+    std::vector<Vector2> parts = {head};
+    Vector2 velocity{0,0};
     void OnKeyDown(SDL_Keycode key);
     void Render(SDL_Renderer* r) const noexcept{
         SetRenderDrawColor(r, Color::GREEN);
@@ -29,9 +35,9 @@ struct Snake{
     }
     void Update();
     void ResetPlayer();
-    bool isSelfColliding() const noexcept{           
-        return std::any_of(parts.begin(), parts.end(), 
-            [head = this->head](auto part) constexpr noexcept { return part == head; });
+    bool isSelfColliding() const noexcept{
+        return std::any_of(parts.begin(), parts.end(),
+            [head = this->head](auto part) constexpr noexcept{ return part == head; });
     }
     bool isInside(SDL_Rect bounds) const noexcept{
         return head.x > bounds.x && head.x < bounds.w &&
@@ -46,7 +52,4 @@ struct Snake{
     bool moving_up = false;
     bool moving_down = false;
     bool new_snake = false;
-
-    float x_array_difference[player_size] = {};
-    float y_array_difference[player_size] = {};
 };

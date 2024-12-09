@@ -1,40 +1,43 @@
 #pragma once
-struct Vector2{
-	float x {}; 
-	float y {};
-
-	Vector2();
-	Vector2(const Vector2& rhs);
-	Vector2(const float x, const float y);
-
-	Vector2& operator-=(const Vector2& rhs){
-			x -= rhs.x;
-			y -= rhs.y;
-			return *this;
-	};
-	Vector2& operator+=(const Vector2& rhs){
-			x += rhs.x;
-			y += rhs.y;
-			return *this;
-	};
-
-	Vector2& operator=(const Vector2& rhs);				 
-	Vector2 operator+(const Vector2& rhs) const;		 
-	Vector2 operator-(const Vector2& rhs) const;		 
-	Vector2 operator*(const Vector2& rhs) const;	
-	Vector2 operator/(const Vector2& rhs) const;
-	Vector2 operator*(const float rhs) const;			 
-	Vector2 operator/(const float rhs) const;		
-
-	bool operator==(const Vector2& rhs) const;
-
-	Vector2 perpendicular() const;
-	Vector2 unit() const;
-
-	float length() const;
-	float length_squared() const;
-	float dot(const Vector2& rhs) const;
-	float cross(const Vector2& rhs) const;
-	void normalize();
-
+struct Vector2 final{
+    float x{};
+    float y{};
+    constexpr Vector2(const Vector2& rhs) noexcept : x(rhs.x), y(rhs.y){}
+    constexpr Vector2(const float x, const float y) noexcept : x(x), y(y){}
+    constexpr Vector2& operator=(const Vector2& rhs) noexcept {
+        x = rhs.x;
+        y = rhs.y;
+        return *this;
+    }
+    constexpr Vector2 operator+(const Vector2& rhs) const noexcept{
+        return Vector2(x + rhs.x, y + rhs.y);
+    }
+    constexpr Vector2 operator-(const Vector2& rhs) const noexcept{
+        return Vector2(x - rhs.x, y - rhs.y);
+    }
+    constexpr Vector2 operator*(const Vector2& rhs) const noexcept{
+        return Vector2(x * rhs.x, y * rhs.y);
+    }
+    constexpr Vector2 operator/(const Vector2& rhs) const noexcept{
+        return Vector2(x / rhs.x, y / rhs.y);
+    }
+    constexpr Vector2 operator*(const float rhs) const noexcept{
+        return Vector2(x * rhs, y * rhs);
+    }
+    constexpr Vector2 operator/(const float rhs) const noexcept{
+        return Vector2(x / rhs, y / rhs);
+    }
+    constexpr bool operator==(const Vector2& rhs) const noexcept{
+        return (this->x == rhs.x && this->y == rhs.y);
+    }
+    constexpr Vector2& operator-=(const Vector2& rhs) noexcept{
+        x -= rhs.x;
+        y -= rhs.y;
+        return *this;
+    };
+    constexpr Vector2& operator+=(const Vector2& rhs) noexcept{
+        x += rhs.x;
+        y += rhs.y;
+        return *this;
+    };
 };
