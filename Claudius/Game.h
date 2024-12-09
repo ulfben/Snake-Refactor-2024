@@ -33,7 +33,7 @@ private:
             if(e.type == SDL_QUIT){
                 running = false;
             } else if(e.type == SDL_KEYDOWN){
-                auto key = e.key.keysym.sym;
+                const auto key = e.key.keysym.sym;
                 player.OnKeyDown(key);
                 running = (key != SDLK_ESCAPE && key != SDLK_q);
             }
