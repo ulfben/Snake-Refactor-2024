@@ -15,11 +15,17 @@ constexpr Vector2 UP = {0, -SPEED};
 constexpr Vector2 DOWN = {0, SPEED};
 constexpr Vector2 STILL = {0, 0};
 
-struct Snake{
-    Vector2 head{starting_x, starting_y};
-    std::vector<Vector2> parts = {head};
-    Vector2 heading = STILL;
-    void onKeyDown(SDL_Keycode key) noexcept{
+class Snake{
+    std::vector<Vector2> parts = {1, {starting_x, starting_y}};
+    Vector2 heading = STILL;      
+
+    Vector2& head() noexcept{ return *parts.begin(); }
+    const Vector2& head() const noexcept{ return *parts.begin(); }
+    Vector2 position() const noexcept{ return parts.front(); }
+    bool hasTail() const noexcept{ return parts.size() > 1; }
+
+public:
+    void input(SDL_Keycode key) noexcept{
         if(key == SDLK_LEFT && heading != RIGHT){
             heading = LEFT;
         } else if(key == SDLK_RIGHT && heading != LEFT){
@@ -31,7 +37,8 @@ struct Snake{
         }
     }
     void update() noexcept{
-        head += heading;
+        std::shift_right(parts.begin(), parts.end(), 1);
+        head() += heading;
     }
     void render(const Renderer& r) const noexcept{
         for(auto part : parts){
@@ -44,31 +51,26 @@ struct Snake{
     }
     void grow() noexcept{
         try{
-            parts.emplace_back(head);
+            parts.emplace_back(position());
         } catch(...){
           /*swallowing exception. The game can keep running, the snake won't grow.*/
         }
     }
-    void respawn() noexcept{
-        heading = STILL;
-        parts.clear();
-        try{
-            parts.emplace_back(starting_x, starting_y); 
-        } catch(...){
-            //swallow exception. but also: this can never happen as clear() keeps our capacity.
+    bool isCollidingWith(Vector2 pos) const noexcept{
+        if(!hasTail()){
+            return head() == pos;
         }
+        const auto tailBegin = parts.begin() + 1;
+        return std::any_of(tailBegin, parts.end(),
+            [pos](const auto& piece) noexcept{ return piece == pos; });
     }
     bool isSelfColliding() const noexcept{
-        return std::any_of(parts.begin(), parts.end(),
-            [head = this->head](auto part) constexpr noexcept{ return part == head; });
+         return hasTail() && isCollidingWith(head());
     }
     bool isInside(SDL_Rect bounds) const noexcept{
         bounds.h -= TILE_SIZE;
         bounds.w -= TILE_SIZE;
-        return head.x > bounds.x && head.x < bounds.w &&
-            head.y > bounds.y && head.y < bounds.h;
-    }
-    bool isCollidingWith(Vector2 pos) const noexcept{
-        return head == pos;
-    }
+        return head().x > bounds.x && head().x < bounds.w &&
+            head().y > bounds.y && head().y < bounds.h;
+    }  
 };

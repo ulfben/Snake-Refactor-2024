@@ -34,7 +34,7 @@ private:
                 isRunning = false;
             } else if(e.type == SDL_KEYDOWN){
                 const auto key = e.key.keysym.sym;
-                snake.onKeyDown(key);
+                snake.input(key);
                 isRunning = (key != SDLK_ESCAPE && key != SDLK_q);
             }
         }
@@ -43,7 +43,7 @@ private:
         snake.update();                               
         if(snake.isSelfColliding() || 
             !snake.isInside({0, 0, window.width(), window.height()})){
-            snake.respawn();
+            snake = {};
         }        
         if(snake.isCollidingWith(apple.pos)){            
             apple = {};
