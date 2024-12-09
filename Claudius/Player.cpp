@@ -2,24 +2,21 @@
 #include <cmath>
 #include "SDLUtils.h"
 
-Player::Player(){    
-    rect.SetBounds(0, 0, size, size);
-    trans.SetPosition(starting_x, starting_y);
+Player::Player(){        
     player_score = 0;
-
     for(int i = 0; i < player_size; i++){        
-        parts[i].rect.SetBounds(0, 0, size, size);
-        parts[i].trans.SetPosition(trans.GetX(), trans.GetY());
+        parts[i].rect = rect;
+        parts[i].trans = trans;
     }
 }
 
 void Player::Render(SDL_Renderer* r)  const noexcept{
     SetRenderDrawColor(r, Color::GREEN);    
-    SDL_Rect sdlr{ (int)trans.position.x,  (int)trans.position.y, rect.w, rect.h};
+    SDL_Rect sdlr{ (int)trans.x,  (int)trans.y, rect.w, rect.h};
     SDL_RenderFillRect(r, &sdlr); 
     for(int i = 0; i < player_score; i++){                
-        sdlr = {static_cast<int>(parts[i].trans.position.x),
-             static_cast<int>(parts[i].trans.position.y),
+        sdlr = {static_cast<int>(parts[i].trans.x),
+             static_cast<int>(parts[i].trans.y),
              rect.w,
              rect.h};    
         SetRenderDrawColor(r, Color::GREEN);    
@@ -28,41 +25,41 @@ void Player::Render(SDL_Renderer* r)  const noexcept{
 }
 
 void Player::Update(){
-    x_array_difference[0] = trans.GetX() - parts[0].trans.GetX();
-    y_array_difference[0] = trans.GetY() - parts[0].trans.GetY();
+    x_array_difference[0] = trans.x - parts[0].trans.x;
+    y_array_difference[0] = trans.y - parts[0].trans.y;
 
     for(int i = 1; i < (player_size - 1); i++){
-        x_array_difference[i] = parts[i].trans.GetX() - parts[i + 1].trans.GetX();
-        y_array_difference[i] = parts[i].trans.GetY() - parts[i + 1].trans.GetY();
+        x_array_difference[i] = parts[i].trans.x - parts[i + 1].trans.x;
+        y_array_difference[i] = parts[i].trans.y - parts[i + 1].trans.y;
     }
 
     if(moving_left == true){
-        trans.ChangePosition(-movement_speed, 0);
-        parts[0].trans.ChangePosition(x_array_difference[0], y_array_difference[0]);
+        trans += {-movement_speed, 0};
+        parts[0].trans += {x_array_difference[0], y_array_difference[0]};
 
         for(int i = 1; i < player_size; i++){
-            parts[i].trans.ChangePosition(x_array_difference[i - 1], y_array_difference[i - 1]);
+            parts[i].trans += Vector2(x_array_difference[i - 1], y_array_difference[i - 1]);
         }
     } else if(moving_right == true){
-        trans.ChangePosition(movement_speed, 0);
-        parts[0].trans.ChangePosition(x_array_difference[0], y_array_difference[0]);
+        trans += Vector2(movement_speed, 0);
+        parts[0].trans += Vector2(x_array_difference[0], y_array_difference[0]);
 
         for(int i = 1; i < player_size; i++){
-            parts[i].trans.ChangePosition(x_array_difference[i - 1], y_array_difference[i - 1]);
+            parts[i].trans += Vector2(x_array_difference[i - 1], y_array_difference[i - 1]);
         }
     } else if(moving_up == true){
-        trans.ChangePosition(0, -movement_speed);
-        parts[0].trans.ChangePosition(x_array_difference[0], y_array_difference[0]);
+        trans += Vector2(0, -movement_speed);
+        parts[0].trans += Vector2(x_array_difference[0], y_array_difference[0]);
 
         for(int i = 1; i < player_size; i++){
-            parts[i].trans.ChangePosition(x_array_difference[i - 1], y_array_difference[i - 1]);
+            parts[i].trans += Vector2(x_array_difference[i - 1], y_array_difference[i - 1]);
         }
     } else if(moving_down == true){
-        trans.ChangePosition(0, movement_speed);
-        parts[0].trans.ChangePosition(x_array_difference[0], y_array_difference[0]);
+        trans += Vector2(0, movement_speed);
+        parts[0].trans += Vector2(x_array_difference[0], y_array_difference[0]);
 
         for(int i = 1; i < player_size; i++){
-            parts[i].trans.ChangePosition(x_array_difference[i - 1], y_array_difference[i - 1]);
+            parts[i].trans += Vector2(x_array_difference[i - 1], y_array_difference[i - 1]);
         }
     }
 }
@@ -97,6 +94,5 @@ void Player::ResetPlayer(){
     moving_left = false;
     moving_up = false;
     moving_down = false;
-
-    trans.SetPosition(starting_x, starting_y);
+    trans = {starting_x, starting_y};
 }

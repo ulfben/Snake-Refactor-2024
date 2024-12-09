@@ -1,19 +1,22 @@
-#pragma once		// #pragma once == Compile this file once.
-
-#include "Transform.h"
+#pragma once
+#include "Vector2.h"
 #include "Color.h"
 #include "Rectangle.h"
 #include "SDL.h"
+constexpr int size = 10;
+constexpr float movement_speed = 10.0f;
+constexpr float starting_x = 300.0f;
+constexpr float starting_y = 300.0f;
+constexpr int player_size = 50;
 struct Player{
     struct PlayerPart{
-        Transform trans;
+        Vector2 trans;
         Rectangle rect;
-    };
-
-    static const int player_size = 50;
+    };    
     PlayerPart parts[player_size];
-    Transform trans;
-    Rectangle rect;
+    Vector2 trans{starting_x, starting_y};
+    Rectangle rect{0, 0, size, size};
+    int player_score = 0;
     Player();
     void OnKeyDown(SDL_Keycode key);    
     void Render(SDL_Renderer* renderManager) const noexcept;				// A reference or pointer doesn't need to be #include, just a forward declare.
@@ -21,24 +24,21 @@ struct Player{
     void ResetPlayer();
     bool isSelfColliding() const noexcept{
         for(int i = 0; i < player_score; i++){
-            if(trans.GetPosition() == parts[i].trans.GetPosition()){
+            if(trans == parts[i].trans){
                 return true;
             }
         }
         return false;
     }
     bool isInside(SDL_Rect bounds) const noexcept{
-        return trans.GetX() > bounds.x && trans.GetX() < bounds.w &&
-            trans.GetY() > bounds.y && trans.GetY() < bounds.h;
+        return trans.x > bounds.x && trans.x < bounds.w &&
+            trans.y > bounds.y && trans.y < bounds.h;
     }
     bool isCollidingWith(Vector2 pos) const noexcept{
-        return trans.GetPosition() == pos;
+        return trans == pos;
     }
 
-    int size = 10;
-    const float movement_speed = 10.0f;
-    const float starting_x = 300.0f;
-    const float starting_y = 300.0f;
+   
 
     bool moving_right = false;
     bool moving_left = false;
@@ -49,5 +49,5 @@ struct Player{
     float x_array_difference[player_size] = {};
     float y_array_difference[player_size] = {};
 
-    int player_score = 0;
+    
 };
