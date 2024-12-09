@@ -147,7 +147,6 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,7 +154,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="SDLSystem.h" />
     <ClInclude Include="SDLUtils.h" />

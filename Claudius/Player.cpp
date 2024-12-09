@@ -2,28 +2,6 @@
 #include <cmath>
 #include "SDLUtils.h"
 
-Player::Player(){        
-    player_score = 0;
-    for(int i = 0; i < player_size; i++){        
-        parts[i].rect = rect;
-        parts[i].trans = trans;
-    }
-}
-
-void Player::Render(SDL_Renderer* r)  const noexcept{
-    SetRenderDrawColor(r, Color::GREEN);    
-    SDL_Rect sdlr{ (int)trans.x,  (int)trans.y, rect.w, rect.h};
-    SDL_RenderFillRect(r, &sdlr); 
-    for(int i = 0; i < player_score; i++){                
-        sdlr = {static_cast<int>(parts[i].trans.x),
-             static_cast<int>(parts[i].trans.y),
-             rect.w,
-             rect.h};    
-        SetRenderDrawColor(r, Color::GREEN);    
-        SDL_RenderFillRect(r, &sdlr);
-    }
-}
-
 void Player::Update(){
     x_array_difference[0] = trans.x - parts[0].trans.x;
     y_array_difference[0] = trans.y - parts[0].trans.y;
