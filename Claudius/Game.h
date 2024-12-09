@@ -43,7 +43,7 @@ private:
         snake.update();                               
         if(snake.isSelfColliding() || 
             !snake.isInside({0, 0, window.width(), window.height()})){
-            snake = {};
+            snake.respawn();
         }        
         if(snake.isCollidingWith(apple.pos)){            
             apple = {};

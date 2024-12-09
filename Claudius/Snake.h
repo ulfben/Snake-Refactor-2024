@@ -13,12 +13,12 @@ constexpr Vector2 LEFT = {-SPEED, 0};
 constexpr Vector2 RIGHT = {SPEED, 0};
 constexpr Vector2 UP = {0, -SPEED};
 constexpr Vector2 DOWN = {0, SPEED};
-constexpr Vector2 NONE = {0, 0};
+constexpr Vector2 STILL = {0, 0};
 
 struct Snake{
     Vector2 head{starting_x, starting_y};
     std::vector<Vector2> parts = {head};
-    Vector2 heading = NONE;
+    Vector2 heading = STILL;
     void onKeyDown(SDL_Keycode key) noexcept{
         if(key == SDLK_LEFT && heading != RIGHT){
             heading = LEFT;
@@ -28,18 +28,18 @@ struct Snake{
             heading = UP;
         } else if(key == SDLK_DOWN && heading != UP){
             heading = DOWN;
-        }    
+        }
     }
     void update() noexcept{
         head += heading;
     }
-    void render(const Renderer& r) const noexcept{        
+    void render(const Renderer& r) const noexcept{
         for(auto part : parts){
             SDL_Rect sdlr = {static_cast<int>(part.x),
                  static_cast<int>(part.y),
                  TILE_SIZE,
                  TILE_SIZE};
-            r.draw(sdlr, Color::GREEN);            
+            r.draw(sdlr, Color::GREEN);
         }
     }
     void grow() noexcept{
@@ -47,6 +47,15 @@ struct Snake{
             parts.emplace_back(head);
         } catch(...){
           /*swallowing exception. The game can keep running, the snake won't grow.*/
+        }
+    }
+    void respawn() noexcept{
+        heading = STILL;
+        parts.clear();
+        try{
+            parts.emplace_back(starting_x, starting_y); 
+        } catch(...){
+            //swallow exception. but also: this can never happen as clear() keeps our capacity.
         }
     }
     bool isSelfColliding() const noexcept{
