@@ -57,8 +57,8 @@ public:
             [pos = head()](const auto& piece) constexpr { return piece == pos; });
     }
     bool isInside(SDL_Rect bounds) const noexcept{        
-        bounds.x -= CELL_SIZE;
-        bounds.y -= CELL_SIZE;
+        bounds.x -= 1;
+        bounds.y -= 1;
         return head().x > bounds.x && head().x < bounds.w &&
             head().y > bounds.y && head().y < bounds.h;
     }  

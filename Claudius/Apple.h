@@ -5,8 +5,8 @@
 #include "Cell.h"
 #include "Configs.h"
 struct Apple{
-    Cell pos{(rand() % 125) * CELL_SIZE,
-                (rand() % 70) * CELL_SIZE};
+    Cell pos{(rand() % COLUMNS),
+                (rand() % ROWS)};
 
     void render(const Renderer& r) const noexcept{    
         r.setColor(RED);
