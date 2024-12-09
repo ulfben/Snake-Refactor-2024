@@ -1,58 +1,44 @@
 #pragma once
+#include <vector>
+#include <algorithm>
 #include "Vector2.h"
 #include "Color.h"
 #include "SDL.h"
 #include "SDLUtils.h"
-constexpr int size = 10;
+constexpr int TILE_SIZE = 10;
 constexpr float movement_speed = 10.0f;
 constexpr float starting_x = 300.0f;
 constexpr float starting_y = 300.0f;
 constexpr int player_size = 50;
 struct Player{
-    struct PlayerPart{
-        Vector2 trans;
-        SDL_Rect rect;
-    };
-    PlayerPart parts[player_size];
-    Vector2 trans{starting_x, starting_y};
-    SDL_Rect rect{0, 0, size, size};
-    int player_score = 0;
-    Player() noexcept{
-        for(int i = 0; i < player_size; i++){
-            parts[i].rect = rect;
-            parts[i].trans = trans;
-        }
-    }
+    Vector2 head{starting_x, starting_y};
+    std::vector<Vector2> parts =  {head};
     void OnKeyDown(SDL_Keycode key);
     void Render(SDL_Renderer* r) const noexcept{
         SetRenderDrawColor(r, Color::GREEN);
-        SDL_Rect sdlr{(int) trans.x,  (int) trans.y, rect.w, rect.h};
+        SDL_Rect sdlr{(int) head.x,  (int) head.y, TILE_SIZE, TILE_SIZE};
         SDL_RenderFillRect(r, &sdlr);
-        for(int i = 0; i < player_score; i++){
-            sdlr = {static_cast<int>(parts[i].trans.x),
-                 static_cast<int>(parts[i].trans.y),
-                 rect.w,
-                 rect.h};
+        for(auto part : parts){
+            sdlr = {static_cast<int>(part.x),
+                 static_cast<int>(part.y),
+                 TILE_SIZE,
+                 TILE_SIZE};
             SetRenderDrawColor(r, Color::GREEN);
             SDL_RenderFillRect(r, &sdlr);
         }
     }
     void Update();
     void ResetPlayer();
-    bool isSelfColliding() const noexcept{
-        for(int i = 0; i < player_score; i++){
-            if(trans == parts[i].trans){
-                return true;
-            }
-        }
-        return false;
+    bool isSelfColliding() const noexcept{           
+        return std::any_of(parts.begin(), parts.end(), 
+            [head = this->head](auto part) constexpr noexcept { return part == head; });
     }
     bool isInside(SDL_Rect bounds) const noexcept{
-        return trans.x > bounds.x && trans.x < bounds.w &&
-            trans.y > bounds.y && trans.y < bounds.h;
+        return head.x > bounds.x && head.x < bounds.w &&
+            head.y > bounds.y && head.y < bounds.h;
     }
     bool isCollidingWith(Vector2 pos) const noexcept{
-        return trans == pos;
+        return head == pos;
     }
 
     bool moving_right = false;

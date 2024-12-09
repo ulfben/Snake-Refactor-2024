@@ -45,8 +45,7 @@ private:
             !player.isInside({0, 0, w.width(), w.height()})){
             player.ResetPlayer();
         }        
-        if(player.isCollidingWith(apple.pos)){
-            player.player_score++;
+        if(player.isCollidingWith(apple.pos)){            
             apple.pos.x = (rand() % 125) * 10.0f;
             apple.pos.y = (rand() % 70) * 10.0f;
         }        
