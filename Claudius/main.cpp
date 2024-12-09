@@ -1,6 +1,7 @@
 ﻿#include "SDLSystem.h"
 #include "Game.h"
 #include "Window.h"
+#include "Renderer.h"
 #include <stdexcept>
 #undef main
 
@@ -10,13 +11,9 @@ int main(){
     constexpr unsigned height = 700;   
     SDLSystem init{};
     Window w{title, width, height};
-    
-    SDL_Renderer* renderer = SDL_CreateRenderer(w.get(), -1, SDL_RendererFlags::SDL_RENDERER_ACCELERATED);
-    if(renderer == nullptr){
-        [[maybe_unused]] const char* error = SDL_GetError();
-        return 0;
-    }
+    Renderer r(w);
     bool running = true;        
+    
     Game game(width, height, title);    
     while(running){
         SDL_Event e;
@@ -27,10 +24,10 @@ int main(){
             }
         }
         game.Update();
-        game.Render(renderer);                        
+        game.Render(r.get());                        
         SDL_Delay(1000 / 20); //<- "Framerate".
     }
 
-    SDL_DestroyRenderer(renderer);
+    SDL_DestroyRenderer(r.get());
     return 0;
 }
