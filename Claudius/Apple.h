@@ -4,12 +4,12 @@
 #include "SDLUtils.h"
 #include "Color.h"
 #include "Vector2.h"
-constexpr auto APPLE_SIZE = 10;
+#include "Configs.h"
 struct Apple{
-    Vector2 pos{(rand() % 125) * 10.0f,
-                (rand() % 70) * 10.0f};
+    Vector2 pos{(rand() % 125) * CELL_SIZE,
+                (rand() % 70) * CELL_SIZE};
 
     void render(const Renderer& r) const noexcept{                
-        r.draw({(int)pos.x, (int)pos.y, APPLE_SIZE, APPLE_SIZE}, Color::RED);
+        r.draw({pos.x, pos.y, CELL_SIZE, CELL_SIZE}, Color::RED);
     }        
 };

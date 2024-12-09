@@ -5,10 +5,7 @@
 #include "Color.h"
 #include "SDL.h"
 #include "SDLUtils.h"
-constexpr int TILE_SIZE = 10; //TODO: apple_size, speed, tile_size, should all be the same. 
-constexpr float SPEED = 10.0f;
-constexpr float starting_x = 300.0f;
-constexpr float starting_y = 300.0f;
+#include "Configs.h"
 constexpr Vector2 LEFT  = {-SPEED, 0};
 constexpr Vector2 RIGHT = {SPEED, 0};
 constexpr Vector2 UP    = {0, -SPEED};
@@ -43,8 +40,8 @@ public:
     void render(const Renderer& r) const noexcept{
         for(auto part : parts){
             SDL_Rect sdlr = {static_cast<int>(part.x), static_cast<int>(part.y),
-                 TILE_SIZE,
-                 TILE_SIZE};
+                 CELL_SIZE,
+                 CELL_SIZE};
             r.draw(sdlr, Color::GREEN);
         }
     }
@@ -64,8 +61,8 @@ public:
             [pos = head()](const auto& piece) constexpr { return piece == pos; });
     }
     bool isInside(SDL_Rect bounds) const noexcept{
-        bounds.h -= TILE_SIZE;
-        bounds.w -= TILE_SIZE;
+        bounds.h -= CELL_SIZE;
+        bounds.w -= CELL_SIZE;
         return head().x > bounds.x && head().x < bounds.w &&
             head().y > bounds.y && head().y < bounds.h;
     }  

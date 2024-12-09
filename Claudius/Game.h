@@ -6,7 +6,6 @@
 #include "Window.h"
 #include "Renderer.h"
 #include <string_view>
-static constexpr auto SLEEP_TIME = 1000 / 20;
 class Game{
 public:
     Game(int width, int height, std::string_view title)
@@ -16,7 +15,7 @@ public:
             input();
             update();
             render();
-            SDL_Delay(SLEEP_TIME);
+            SDL_Delay(FRAME_DELAY);
         }
     }
 private: 
