@@ -6,7 +6,7 @@
 #include "Window.h"
 #include "Renderer.h"
 #include <string_view>
-class Game{
+class Game final{
 public:
     Game(int width, int height, std::string_view title)
         : window(title, width, height), r(window){}

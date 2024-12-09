@@ -2,15 +2,13 @@
 #include <vector>
 #include <algorithm>
 #include "Cell.h"
-#include "SDL.h"
-#include "SDLUtils.h"
 #include "Configs.h"
 constexpr Cell LEFT  = {-SPEED, 0};
 constexpr Cell RIGHT = {SPEED, 0};
 constexpr Cell UP    = {0, -SPEED};
 constexpr Cell DOWN  = {0, SPEED};
 constexpr Cell STILL = {0, 0};
-class Snake{
+class Snake final{
     std::vector<Cell> parts = {1, {starting_x, starting_y}};
     Cell heading = STILL;      
 

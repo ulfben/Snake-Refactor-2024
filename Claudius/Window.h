@@ -3,15 +3,14 @@
 #include <stdexcept>
 #include <memory>
 #include "SDLUtils.h"
-#include "SDL.h"
-class Window{
+class Window final{
     using WindowPtr = std::unique_ptr<SDL_Window, SDL_Deleter>;   
     WindowPtr ptr;
 public:
     Window(std::string_view title, unsigned width, unsigned height, SDL_WindowFlags flags = SDL_WindowFlags::SDL_WINDOW_RESIZABLE){
         ptr.reset(SDL_CreateWindow(title.data(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags));
         if(ptr == nullptr){
-            throw std::runtime_error(SDL_GetError());
+            throw SDLInitError();
         }
     } 
     int width() const noexcept{

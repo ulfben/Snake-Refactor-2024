@@ -1,10 +1,8 @@
 #pragma once
 #include "Renderer.h"
-#include "Apple.h"
-#include "SDLUtils.h"
 #include "Cell.h"
 #include "Configs.h"
-struct Apple{
+struct Apple final{
     Cell pos{(rand() % COLUMNS),
                 (rand() % ROWS)};
 

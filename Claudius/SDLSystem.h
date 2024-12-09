@@ -1,11 +1,10 @@
 #pragma once
-#include <SDL.h>
-#include <stdexcept>
-struct SDLSystem{
+#include "SDLUtils.h"
+struct SDLSystem final{
     SDLSystem(){
         auto result = SDL_Init(SDL_INIT_EVERYTHING);
         if(result != 0){
-            throw std::runtime_error(SDL_GetError());
+            throw SDLInitError();
         }
     }
     ~SDLSystem() noexcept {
