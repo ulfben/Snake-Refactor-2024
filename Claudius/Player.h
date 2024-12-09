@@ -16,7 +16,7 @@ struct Player{
     Rectangle rect;
     Player();
     void OnKeyDown(SDL_Keycode key);    
-    void Render(SDL_Renderer* renderManager);				// A reference or pointer doesn't need to be #include, just a forward declare.
+    void Render(SDL_Renderer* renderManager) const noexcept;				// A reference or pointer doesn't need to be #include, just a forward declare.
     void Update();
     void ResetPlayer();
     bool isSelfColliding() const noexcept{
@@ -30,6 +30,9 @@ struct Player{
     bool isInside(SDL_Rect bounds) const noexcept{
         return trans.GetX() > bounds.x && trans.GetX() < bounds.w &&
             trans.GetY() > bounds.y && trans.GetY() < bounds.h;
+    }
+    bool isCollidingWith(Vector2 pos) const noexcept{
+        return trans.GetPosition() == pos;
     }
 
     int size = 10;

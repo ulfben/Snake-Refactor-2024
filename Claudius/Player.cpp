@@ -13,7 +13,7 @@ Player::Player(){
     }
 }
 
-void Player::Render(SDL_Renderer* r){
+void Player::Render(SDL_Renderer* r)  const noexcept{
     SetRenderDrawColor(r, Color::GREEN);    
     SDL_Rect sdlr{ (int)trans.position.x,  (int)trans.position.y, rect.w, rect.h};
     SDL_RenderFillRect(r, &sdlr); 

@@ -3,16 +3,13 @@
 #include "SDLUtils.h"
 #include "Color.h"
 
-Apple::Apple(){    
-    rect.SetBounds(0, 0, 10, 10);
+Apple::Apple(){        
     trans.SetPosition(100, 200);    
 }
 
-void Apple::Render(SDL_Renderer* r){
+void Apple::Render(SDL_Renderer* r) const noexcept{
     SetRenderDrawColor(r, Color::GREEN);
-    rect.x = (int)trans.position.x;
-    rect.y = (int)trans.position.y;
-    SDL_Rect sdlr{rect.x, rect.y, rect.w, rect.h};
+    SDL_Rect sdlr{(int)trans.position.x, (int)trans.position.y, 10, 10};
     SDL_RenderFillRect(r, &sdlr);  // <- If you want to draw a "filled" rectangle.    
 }
 

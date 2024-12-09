@@ -6,40 +6,28 @@
 #include "Window.h"
 #include "Renderer.h"
 #include <string_view>
-
 static constexpr auto SLEEP_TIME = 1000 / 20;
 class Game{
+public:
+    Game(int width, int height, std::string_view title)
+        : w(title, width, height), r(w){}
+    void run() noexcept {
+        while(running){
+            Input();
+            Update();
+            Render();
+            SDL_Delay(SLEEP_TIME);
+        }
+    }
+private: 
     SDLSystem init{};
     Window w;
-    Renderer r;
-    bool running = true;
+    Renderer r;    
     Player player;
     Apple apple;
-    void Update(){
-        player.Update();                               
-        if(player.isSelfColliding() || 
-            !player.isInside({0, 0, w.width(), w.height()})){
-            player.ResetPlayer();
-        }
+    bool running = true;
 
-        // Player going out of Y bounds.
-        if(player.trans.GetY() > w.height() || player.trans.GetY() < 0){
-            player.ResetPlayer();
-        }
-
-        // Player collide on apple.
-        if(player.trans.GetPosition() == apple.trans.GetPosition()){
-            player.player_score++;
-            apple.trans.SetPosition((rand() % 125) * 10.0f, (rand() % 70) * 10.0f);
-        }
-    };
-    void Render(){
-        r.clear(Color::BLACK);
-        player.Render(r.get());
-        apple.Render(r.get());
-        r.present();
-    }
-    void Input(){
+    void Input() noexcept{
         SDL_Event e;
         while(SDL_PollEvent(&e)){
             if(e.type == SDL_QUIT){
@@ -51,15 +39,21 @@ class Game{
             }
         }
     }
-public:
-    Game(int width, int height, std::string_view title)
-        : w(title, width, height), r(w){}
-    void run(){
-        while(running){
-            Input();
-            Update();
-            Render();
-            SDL_Delay(SLEEP_TIME);
-        }
+    void Update() noexcept {
+        player.Update();                               
+        if(player.isSelfColliding() || 
+            !player.isInside({0, 0, w.width(), w.height()})){
+            player.ResetPlayer();
+        }        
+        if(player.isCollidingWith(apple.trans.GetPosition())){
+            player.player_score++;
+            apple.trans.SetPosition((rand() % 125) * 10.0f, (rand() % 70) * 10.0f);
+        }        
+    };
+    void Render() const noexcept{
+        r.clear(Color::BLACK);
+        player.Render(r.get());
+        apple.Render(r.get());
+        r.present();
     }
 };

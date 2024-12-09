@@ -4,13 +4,9 @@
 #include "Transform.h"
 #include "SDL.h"
 
-struct Apple
-{	
-		Apple();
-	void Render(SDL_Renderer* r);	
-
-	Rectangle rect;	
-	Transform trans;
-
-	bool new_apple = false;
+struct Apple{
+    Apple();
+    void Render(SDL_Renderer* r) const noexcept;
+    Transform trans;
+    bool new_apple = false;
 };
