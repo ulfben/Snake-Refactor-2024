@@ -7,10 +7,17 @@
 #include "Renderer.h"
 #include <string_view>
 class Game final{
+    SDLSystem init{};
+    Window window;
+    Renderer r;
+    Snake snake;
+    Apple apple;
+    bool isRunning = true;
 public:
     Game(int width, int height, std::string_view title)
         : window(title, width, height), r(window){}
-    void run() noexcept {
+    
+    void run() noexcept{
         while(isRunning){
             input();
             update();
@@ -18,14 +25,8 @@ public:
             SDL_Delay(FRAME_DELAY);
         }
     }
-private: 
-    SDLSystem init{};
-    Window window;
-    Renderer r;    
-    Snake snake;
-    Apple apple;
-    bool isRunning = true;
 
+private:
     void input() noexcept{
         SDL_Event e;
         while(SDL_PollEvent(&e)){
@@ -38,16 +39,16 @@ private:
             }
         }
     }
-    void update() noexcept {
-        snake.update();                               
-        if(snake.isSelfColliding() || 
+    void update() noexcept{
+        snake.update();
+        if(snake.isSelfColliding() ||
             !snake.isInside({0, 0, COLUMNS, ROWS})){
             snake = {};
-        }        
-        if(snake.isCollidingWith(apple.pos)){            
+        }
+        if(snake.isCollidingWith(apple.pos)){
             apple = {};
             snake.grow();
-        }        
+        }
     }
     void render() const noexcept{
         r.clear(BLACK);
